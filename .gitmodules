@@ -1,0 +1,6 @@
+[submodule "hbird-sdk"]
+	path = hbird-sdk
+	url = https://github.com/wuhanstudio/hbird-sdk
+[submodule "Tang_E203_Mini"]
+	path = Tang_E203_Mini
+	url = https://github.com/wuhanstudio/Tang_E203_Mini
