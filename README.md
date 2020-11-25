@@ -54,3 +54,7 @@ $ make SOC=hbird BOARD=hbird_eval CORE=e203 upload
 ```
 
 That's it ! Congratulations !
+
+### Related Projects
+
+- [Picorv32 + RT-Thread](https://github.com/wuhanstudio/picorv32_tang)
