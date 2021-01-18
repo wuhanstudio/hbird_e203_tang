@@ -57,4 +57,6 @@ That's it ! Congratulations !
 
 ### Related Projects
 
-- [Picorv32 + RT-Thread](https://github.com/wuhanstudio/picorv32_tang)
+- [Picorv32 on MXO2 (Baremetal)](https://github.com/wuhanstudio/picorv32_MXO2)
+- [Picorv32 on Lichee Tang (RT-Thread)](https://github.com/wuhanstudio/picorv32_tang)
+- [HBird_E203 on Lichee Tang (RT-Thread)](https://github.com/wuhanstudio/hbird_e203_tang)
