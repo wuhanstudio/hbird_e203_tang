@@ -47,8 +47,19 @@ Connect your board with JTAG. here's the pin map.
 Let's build the firmware. Instructions on how to set up the toolchain can be found [here](https://doc.nucleisys.com/hbirdv2/quick_start/sdk.html)
 
 ```
+$ wget https://download.nucleisys.com/upload/files/toolchain/openocd/nuclei-openocd-2022.08-linux-x64.tgz
+$ sudo tar -xvf nuclei-openocd-2022.08-linux-x64.tgz -C /opt
+
+$ wget https://download.nucleisys.com/upload/files/toolchain/gcc/nuclei_riscv_newlibc_prebuilt_linux64_2022.08.tar.bz2
+$ sudo tar -xvf nuclei_riscv_newlibc_prebuilt_linux64_2022.08.tar.bz2 -C /opt/Nuclei
+
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libtinfo.so.6 /usr/lib/x86_64-linux-gnu/libtinfo.so.5
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libncursesw.so.6 /usr/lib/x86_64-linux-gnu/libncursesw.so.5
+```
+
+```
 $ cd hbird-sdk/application/rtthread/msh/
-$ export NUCLEI_TOOL_ROOT=/opt/nuclei/             # replace with your path
+$ export NUCLEI_TOOL_ROOT=/opt/Nuclei/             # replace with your path
 $ export PATH=$NUCLEI_TOOL_ROOT/gcc/bin:$NUCLEI_TOOL_ROOT/openocd/bin:$PATH
 $ make SOC=hbird BOARD=hbird_eval CORE=e203 upload
 ```
