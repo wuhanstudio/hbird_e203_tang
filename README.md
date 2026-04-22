@@ -64,6 +64,53 @@ $ export PATH=$NUCLEI_TOOL_ROOT/gcc/bin:$NUCLEI_TOOL_ROOT/openocd/bin:$PATH
 $ make SOC=hbird BOARD=hbird_eval CORE=e203 upload
 ```
 
+### Step 3 - Upload rt-thread firmware
+
+If OpenOCD does not work, you will need to use `flashrom` to manually upload the firmware to the user SPI flash (not the one that stores bitstream).
+
+Since the user SPI flash pnis are not exposed, please refer to [lichee-tang-spi-passthrough](https://github.com/wuhanstudio/lichee-tang-spi-passthrough) to redirect SPI pins:
+
+```
+$ dd if=msh.bin of=msh_padded.bin bs=1M count=1 conv=sync
+$ flashrom -p serprog:dev=COM3 -w .\msh_padded.bin
+```
+
+```
+        ┌────────────────────┐
+        │   STM32 (serprog)  │
+        │                    │
+        │ PA5  (SCK)  ───────┼──────────────┐
+        │ PA4  (CS)   ───────┼──────────┐   │
+        │ PA7  (MOSI) ───────┼──────┐   │   │
+        │ PA6  (MISO) ◄──────┼──┐   │   │   │
+        └────────────────────┘  │   │   │   │
+                                │   │   │   │
+                               B15 A14 B14  B16
+                        ┌────────────────────────┐
+                        │         FPGA           │
+                        │                        │
+                        │ B16  stm32_sck_in      │
+                        │ B14  stm32_cs_in       │
+                        │ A14  stm32_mosi_in     │
+                        │ B15  stm32_miso_out    │
+                        │                        │
+                        │ H4   flash_sck_out ─────────────────┐
+                        │ D3   flash_cs_out  ────────────┐    │
+                        │ B3   flash_mosi_out ────────┐  │    │
+                        │ F4   flash_miso_in  ─────┐  │  │    │
+                        └────────────────────────┘ │  │  │    │
+                                                   │  │  │    │
+                                                   ▼  ▼  ▼    ▼
+                                           ┌────────────────────┐
+                                           │     SPI Flash      │
+                                           │                    │
+                                           │ CLK  ◄──────── H4  │
+                                           │ CS   ◄──────── D3  │
+                                           │ DI   ◄──────── B3  │ (MOSI)
+                                           │ DO   ─────────► F4 │ (MISO)
+                                           └────────────────────┘
+```
+
 That's it ! Congratulations !
 
 ### Related Projects
